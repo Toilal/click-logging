@@ -31,7 +31,7 @@ def simple_verbosity_option(logger=None, *names, **kwargs):
             x = getattr(logging, value.upper(), None)
             if x is None:
                 raise click.BadParameter(
-                    'Must be CRITICAL, ERROR, WARNING, INFO or DEBUG, not {}'
+                    'Must be CRITICAL, ERROR, WARNING, INFO or DEBUG, not {}'.format(value)
                 )
             logger.setLevel(x)
 
