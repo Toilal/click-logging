@@ -14,9 +14,6 @@ def simple_verbosity_option(logger=None, *names, **kwargs):
 
     if not names:
         names = ['--verbosity', '-v']
-    if isinstance(logger, str) and logger.startswith('-'):
-        raise ValueError('Since click-log 0.2.0, the first argument must now '
-                         'be a logger.')
 
     kwargs.setdefault('default', 'INFO')
     kwargs.setdefault('metavar', 'LVL')
