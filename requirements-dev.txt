@@ -1,0 +1,7 @@
+pytest
+flake8
+python-semantic-release
+pre-commit
+commitizen
+
+-r requirements.txt
