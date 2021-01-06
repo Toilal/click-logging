@@ -63,21 +63,25 @@ Wrapping if-statements around each `echo`-call is cumbersome though. And with th
 
 Logging is a better solution, but partly because Python's logging module aims to be so generic, it doesn't come with sensible defaults for CLI applications. At some point you might also want to expose more logging levels through more options, at which point the boilerplate code grows even more.
 
-This is where click-log comes in:
+This is where click-logging comes in:
 
-    import logging
-    logger = logging.getLogger(__name__)
-    click_log.basic_config(logger)
+```python
+import logging
+import click
+import click_logging
 
-    @click.command()
-    @click_log.simple_verbosity_option(logger)
-    def cli():
-        logger.info("Dividing by zero.")
+logger = logging.getLogger(__name__)
+click_logging.basic_config(logger)
+@click.command()
+@click_logging.simple_verbosity_option(logger)
+def cli():
+    logger.info("Dividing by zero.")
 
-        try:
-            1 / 0
-        except:
-            logger.error("Failed to divide by zero.")
+    try:
+        1 / 0
+    except:
+        logger.error("Failed to divide by zero.")
+```
 
 The output will look like this:
 
@@ -91,6 +95,40 @@ The :pysimple\_verbosity\_option decorator adds a `--verbosity` option that take
 > **note**
 >
 > Make sure to define the simple\_verbosity\_option as early as possible. Otherwise logging setup will not be early enough for some of your other eager options.
+
+Customize output
+---
+
+You can customize [click styles](https://click.palletsprojects.com/en/7.x/api/#utilities) for each log level with 
+`style_kwargs` keyword argument of `basic_config` function.
+
+```python
+import logging
+import click_logging
+
+logger = logging.getLogger(__name__)
+style_kwargs = {
+    'error': dict(fg='red', blink=True),
+    'exception': dict(fg='red', blink=True),
+    'critical': dict(fg='red', blink=True)
+}
+click_logging.basic_config(logger, style_kwargs=style_kwargs)
+```
+
+You can customize [click echo](https://click.palletsprojects.com/en/7.x/api/#utilities) to stderr using `echo_kwargs` keyword argument of `basic_config` function.
+
+```python
+import logging
+import click_logging
+
+logger = logging.getLogger(__name__)
+echo_kwargs = {
+    'error': dict(err=True),
+    'exception': dict(err=True),
+    'critical': dict(err=True),
+}
+click_logging.basic_config(logger, echo_kwargs=True)
+```
 
 API
 ---

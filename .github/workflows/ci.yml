@@ -47,7 +47,7 @@ jobs:
 
   release:
     if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
-    needs: build
+    needs: [build, commitlint]
 
     runs-on: ubuntu-latest
 
