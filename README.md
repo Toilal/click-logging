@@ -138,7 +138,7 @@ echo_kwargs = {
     'exception': dict(err=True),
     'critical': dict(err=True),
 }
-click_logging.basic_config(logger, echo_kwargs=True)
+click_logging.basic_config(logger, echo_kwargs=echo_kwargs)
 ```
 
 Fork
