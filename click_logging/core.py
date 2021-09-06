@@ -25,6 +25,7 @@ def _meta():
 class ColorFormatter(logging.Formatter):
     def __init__(self, style_kwargs):
         self.style_kwargs = style_kwargs
+        super().__init__()
 
     def format(self, record):
         if not record.exc_info:
@@ -35,7 +36,7 @@ class ColorFormatter(logging.Formatter):
                                      **self.style_kwargs[level])
                 msg = '\n'.join(prefix + x for x in msg.splitlines())
             return msg
-        return logging.Formatter.format(self, record)
+        return super().format(record)
 
 
 class ClickHandler(logging.Handler):

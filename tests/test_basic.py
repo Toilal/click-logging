@@ -103,3 +103,20 @@ def test_logging_args(runner):
 
     result = runner.invoke(cli, ['-v', 'debug'])
     assert 'debug: hello world' in result.output
+
+def test_logging_exception(runner):
+    @click.command()
+    @click_logging.simple_verbosity_option(test_logger)
+    def cli():
+        try:
+            1/0
+        except ZeroDivisionError:
+            test_logger.exception('Uh oh.')
+
+    result = runner.invoke(cli, ['-v', 'debug'])
+
+    # to catch regressions for "AttributeError: 'ColorFormatter' object has no attribute '_style'"
+    assert "AttributeError" not in result.output
+
+    assert 'Uh oh.' in result.output
+    assert 'ZeroDivisionError:' in result.output
