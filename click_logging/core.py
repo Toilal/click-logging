@@ -25,6 +25,7 @@ def _meta():
 class ColorFormatter(logging.Formatter):
     def __init__(self, style_kwargs):
         self.style_kwargs = style_kwargs
+        super().__init__()
 
     def format(self, record):
         if not record.exc_info:
@@ -35,7 +36,7 @@ class ColorFormatter(logging.Formatter):
                                      **self.style_kwargs[level])
                 msg = '\n'.join(prefix + x for x in msg.splitlines())
             return msg
-        return logging.Formatter.format(self, record)
+        return super().format(record)
 
 
 class ClickHandler(logging.Handler):
@@ -75,10 +76,10 @@ def _normalize_style_kwargs(styles):
 
 
 def _normalize_echo_kwargs(echo_kwargs):
-    normamized_echo_kwargs = dict()
+    normalized_echo_kwargs = dict()
     if echo_kwargs:
-        normamized_echo_kwargs.update(echo_kwargs)
-    return normamized_echo_kwargs
+        normalized_echo_kwargs.update(echo_kwargs)
+    return normalized_echo_kwargs
 
 
 def basic_config(logger=None, style_kwargs=None, echo_kwargs=None):
