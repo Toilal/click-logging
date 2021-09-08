@@ -76,10 +76,10 @@ def _normalize_style_kwargs(styles):
 
 
 def _normalize_echo_kwargs(echo_kwargs):
-    normamized_echo_kwargs = dict()
+    normalized_echo_kwargs = dict()
     if echo_kwargs:
-        normamized_echo_kwargs.update(echo_kwargs)
-    return normamized_echo_kwargs
+        normalized_echo_kwargs.update(echo_kwargs)
+    return normalized_echo_kwargs
 
 
 def basic_config(logger=None, style_kwargs=None, echo_kwargs=None):
