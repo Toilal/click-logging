@@ -1,6 +1,9 @@
 include CHANGELOG.md
 include LICENSE
 include Makefile
+include requirements-ci.txt
+include requirements-dev.txt
+include requirements.txt
 
 recursive-include docs *
 recursive-include tests *
